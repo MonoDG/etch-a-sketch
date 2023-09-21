@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    background-color: lightblue;
+}
+
+.squared {
+    flex: 1 auto 20px;
+    width: 37.5px;
+    height: 37.5px;
+    border: 1px solid gray;
+}
