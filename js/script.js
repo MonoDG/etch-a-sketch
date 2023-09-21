@@ -30,6 +30,11 @@ function recreateGrid() {
     if (!Number.isInteger(newWidth)) {
         newWidth = 16;
     }
+
+    if (newWidth > 100) {
+        alert("It can't be greater than 100x100");
+        return;
+    }
     const gridContainer = document.querySelector(".grid-container");
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild);
