@@ -10,6 +10,7 @@ function createSquareDiv(width) {
 
 function createGrid(width) {
     const gridContainer = document.querySelector(".grid-container");
+    gridContainer.addEventListener("dragstart", (e) => e.preventDefault());
     gridContainer.addEventListener("mouseup", () => mousePressed = false);
     for (let i = 0; i < width * width; i++) {
         const squareDiv = createSquareDiv(width);
