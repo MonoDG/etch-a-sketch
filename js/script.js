@@ -1,5 +1,6 @@
 function createSquareDiv(width) {
     const squareDiv = document.createElement("div")
+    squareDiv.setAttribute("draggable", "false");
     squareDiv.classList.add("squared");
     let newWidth = Math.round((960 / width) * 100) / 100;
     squareDiv.style.width = `${newWidth}px`;
@@ -9,20 +10,36 @@ function createSquareDiv(width) {
 
 function createGrid(width) {
     const gridContainer = document.querySelector(".grid-container");
+    gridContainer.addEventListener("mouseup", () => mousePressed = false);
     for (let i = 0; i < width * width; i++) {
         const squareDiv = createSquareDiv(width);
         squareDiv.addEventListener("mouseover", applyHoverColor);
+        squareDiv.addEventListener("mousedown", (e) => {
+            mousePressed = true;
+            applyHoverColor(e);
+        });
         gridContainer.appendChild(squareDiv);
     }
 }
 
-function applyHoverColor() {
-    this.classList.add("hovered");
+function applyHoverColor(e) {
+    if (mousePressed) {
+        if (hoverInteractions > 0) {
+            rgbArr = getRandomRGBColor();
+            console.log("Interactions left " + hoverInteractions);
+            const darkenedRGBArr = rgbArr.map(color => Math.round(color - (color / 10)))
+            e.target.style.backgroundColor = `rgb(${darkenedRGBArr[0]}, ${darkenedRGBArr[1]}, ${darkenedRGBArr[2]})`;
+            hoverInteractions--;
+        } else {
+            e.target.style.backgroundColor = "rgb(0,0,0)";
+        }
+    }
 }
 
 function clearGrid() {
     const squares = document.querySelectorAll(".squared");
-    squares.forEach(square => square.classList.remove("hovered"));
+    squares.forEach(square => square.style.backgroundColor = "lightblue");
+    hoverInteractions = 10;
 }
 
 function recreateGrid() {
@@ -40,6 +57,19 @@ function recreateGrid() {
         gridContainer.removeChild(gridContainer.firstChild);
     }
     createGrid(newWidth);
+    hoverInteractions = 10;
+}
+
+function getRandomRGBColor() {
+    let r = parseInt(Math.random() * 255);
+    let g = parseInt(Math.random() * 255);
+    let b = parseInt(Math.random() * 255);
+    return [r, g, b];
 }
 
 createGrid(16);
+let hoverInteractions = 10;
+let mousePressed = false;
+
+let body = document.querySelector("body");
+body.parentElement.addEventListener("mouseup", () => mousePressed = false);
