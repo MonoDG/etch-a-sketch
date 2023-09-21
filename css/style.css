@@ -20,3 +20,7 @@ body {
     height: 37.5px;
     border: 1px solid gray;
 }
+
+.hovered {
+    background-color: darkcyan;
+}

@@ -6,12 +6,20 @@ function createSquareDiv() {
 
 function createGrid(width) {
     const gridContainer = document.querySelector(".grid-container");
-    const grid = [];
     for (let i = 0; i < width; i++) {
         const squareDiv = createSquareDiv();
+        squareDiv.addEventListener("mouseover", applyHoverColor);
         gridContainer.appendChild(squareDiv);
-        grid.push(squareDiv);
     }
+}
+
+function applyHoverColor() {
+    this.classList.add("hovered");
+}
+
+function clearGrid() {
+    const squares = document.querySelectorAll(".squared");
+    squares.forEach(square => square.classList.remove("hovered"));
 }
 
 createGrid(256);
